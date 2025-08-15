@@ -1,4 +1,4 @@
-package com.example.pib2.Users.config;
+package com.example.pib2.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

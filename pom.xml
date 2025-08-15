@@ -78,7 +78,8 @@
             <version>2.5.0</version> <!-- O la última versión disponible -->
         </dependency>
         <dependency>
-            <groupId>com.microsoft.sqlserver</groupId>
+            <!-- SQL SERVER -->
+            <groupId>com.microsoft.sqlserver</groupId> 
             <artifactId>mssql-jdbc</artifactId>            
         </dependency> 
        

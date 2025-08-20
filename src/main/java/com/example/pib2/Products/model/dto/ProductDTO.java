@@ -13,6 +13,9 @@ public class ProductDTO {
     private Integer productId;
     private String producto;
     private String descripcion;
+    private Boolean isActive;
     private Integer unidadId;
-    private Integer categoriaId;
+    private Long IdCategoria;
+    private String nombreCategoria;
+
 }

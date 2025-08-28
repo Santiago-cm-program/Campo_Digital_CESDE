@@ -23,6 +23,6 @@ public class Categorias {
     private String categoria;
 
     @Column(nullable = false)
-    private Boolean isActive;
+    private boolean isActive;
 
 }

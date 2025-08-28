@@ -12,4 +12,5 @@ import lombok.Builder;
 public class CategoryDTO {
     private Long categoryId;
     private String category;
+    private boolean isActive;
 }

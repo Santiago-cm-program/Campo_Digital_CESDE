@@ -20,7 +20,6 @@ public class CategoryServiceImpl implements CategoryService {
     public List<CategoryDTO> getAllCategories() {
     return categoryRepository.findAll()
             .stream()
-            .filter(Categorias::getIsActive)
             .map(this::convertToDto)
             .collect(Collectors.toList());
 }
@@ -45,6 +44,7 @@ public class CategoryServiceImpl implements CategoryService {
                 .orElseThrow(() -> new RuntimeException("Categoria not found"));
 
         category.setCategoria(categoryDto.getCategory());
+        category.setActive(categoryDto.isActive());
         Categorias updatedCategory = categoryRepository.save(category);
         return convertToDto(updatedCategory);
     }
@@ -53,7 +53,7 @@ public class CategoryServiceImpl implements CategoryService {
     public void deleteCategory(Long categoryId) {
         Categorias category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new RuntimeException("Category not found"));
-        category.setIsActive(false);
+        category.setActive(false);
         categoryRepository.save(category);
     }
 
@@ -61,12 +61,14 @@ public class CategoryServiceImpl implements CategoryService {
         return CategoryDTO.builder()
                 .categoryId(category.getIdCategoria())
                 .category(category.getCategoria())
+                .isActive(category.isActive())
                 .build();
     }
 
     private Categorias convertToEntity(CategoryDTO categoryDto) {
         return Categorias.builder()
                 .categoria(categoryDto.getCategory())
+                .isActive(categoryDto.isActive())
                 .build();
     }
 }

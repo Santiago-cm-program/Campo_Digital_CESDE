@@ -3,52 +3,36 @@ package com.example.pib2.Products.service.serviceImplProduct;
 import com.example.pib2.Products.model.Entity.Productos;
 import com.example.pib2.Products.model.dto.ProductDTO;
 import com.example.pib2.Categories.model.Entity.Categorias;
+import com.example.pib2.Categories.repository.CategoryRepository;
 import com.example.pib2.Products.service.serviceProduct.ProductService;
 import com.example.pib2.Products.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+    private CategoryRepository categoryRepository;
 
     @Override
     public List<ProductDTO> getAllProducts() {
-        return productRepository.getAllWithCategories()
-                .stream()
-                .map(p -> {
-                    ProductDTO dto = new ProductDTO();
-                    dto.setProductId(p.getIdProducto());
-                    dto.setProducto(p.getProducto());
-                    dto.setDescripcion(p.getDescripcion());
-                    dto.setIsActive(p.getIsActive());
-                    dto.setUnidadId(p.getIdUnidad());
-                    dto.setIdCategoria(p.getCategoria().getIdCategoria());
-                    dto.setNombreCategoria(p.getCategoria().getCategoria());
-                    return dto;
-                })
-                .toList();
+    return productRepository.findAll()
+            .stream()
+            .map(this::convertToDto)
+            .collect(Collectors.toList());
     }
 
     @Override
-    public ProductDTO getProductById(Long productoId) {
-        return productRepository.getByIdWithCategories(productoId)
-                .map(p -> {
-                    ProductDTO dto = new ProductDTO();
-                    dto.setProductId(p.getIdProducto());
-                    dto.setProducto(p.getProducto());
-                    dto.setDescripcion(p.getDescripcion());
-                    dto.setIsActive(p.getIsActive());
-                    dto.setUnidadId(p.getIdUnidad());
-                    dto.setIdCategoria(p.getCategoria().getIdCategoria());
-                    dto.setNombreCategoria(p.getCategoria().getCategoria());
-                    return dto;
-                })
-                .orElse(null);
+    public ProductDTO getProductById(Long productId) {
+        Productos product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+        return convertToDto(product);
     }
 
     @Override
@@ -59,21 +43,39 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO updateProduct(Long productId, ProductDTO productDto) {
-        Productos product = productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+    public ProductDTO updateProduct(Long productId, Map<String, Object> updates) {
+    Productos product = productRepository.findById(productId)
+            .orElseThrow(() -> new RuntimeException("Product not found"));
 
-        product.setProducto(productDto.getProducto());
-        product.setDescripcion(productDto.getDescripcion());
-        product.setIdUnidad(productDto.getUnidadId());
-
-        Categorias categoria = new Categorias();
-        categoria.setIdCategoria(productDto.getIdCategoria());
-        product.setCategoria(categoria);
+        updates.forEach((campo, valor) -> {
+            switch (campo) {
+                case "producto":
+                    product.setProducto((String) valor);
+                    break;
+                case "descripcion":
+                    product.setDescripcion((String) valor);
+                    break;
+                case "isActive":
+                    product.setIsActive(Boolean.valueOf(valor.toString()));
+                    break;
+                case "unidadId":
+                    product.setIdUnidad(Integer.valueOf(valor.toString()));
+                    break;
+                case "categoriaId":
+                    Categorias categoria = categoryRepository.findById(Long.valueOf(valor.toString()))
+                            .orElseThrow(() -> new RuntimeException("Category not found"));
+                    product.setCategoria(categoria);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Campo no soportado: " + campo);
+        }
+    });
 
         Productos updatedProduct = productRepository.save(product);
         return convertToDto(updatedProduct);
     }
+
+
 
     @Override
     public void deleteProduct(Long productId) {

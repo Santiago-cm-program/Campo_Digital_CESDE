@@ -7,23 +7,23 @@ import com.example.pib2.Users.model.dto.TypeClientsDTO.TypeClientsDTO;
 import com.example.pib2.Users.repository.TypeClienteRepository.TypeClienteRepository;
 import com.example.pib2.Users.service.serviceTypeClient.TypeClienteService;
 
-
 @Service
 public class TypeClientServiceImpl implements TypeClienteService {
 
-    private final TypeClienteRepository typeClientsRepository;
+    private final TypeClienteRepository typeClienteRepository;
 
-    public TypeClientServiceImpl(TypeClienteRepository typeClientsRepository) {
-        this.typeClientsRepository = typeClientsRepository;
+    public TypeClientServiceImpl(TypeClienteRepository typeClienteRepository) {
+        this.typeClienteRepository = typeClienteRepository;
     }
 
     @Override
     public List<TypeClientsDTO> getAllTypeClients() {
-        return typeClientsRepository.findAll()
+        return typeClienteRepository.findAll()
                 .stream()
-                .map(entity -> new TypeClientsDTO(entity.getDescripcion(), entity.getIdTipoCliente()
+                .map(entity -> new TypeClientsDTO(
+                entity.getIdTipoCliente(),
+                entity.getTipoCliente() // ← aquí usamos el nombre correcto de la propiedad en la entidad
         ))
                 .toList();
     }
-
 }

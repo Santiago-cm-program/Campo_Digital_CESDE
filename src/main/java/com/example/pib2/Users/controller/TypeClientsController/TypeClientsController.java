@@ -20,7 +20,7 @@ public class TypeClientsController {
     private TypeClienteService typeClienteService;
 
     @GetMapping()
-    public ResponseEntity<List<TypeClientsDTO>> getUserById() {
+    public ResponseEntity<List<TypeClientsDTO>> getTypeClient() {
         List<TypeClientsDTO> typeClient = typeClienteService.getAllTypeClients();
         return new ResponseEntity<>(typeClient, HttpStatus.OK);
     }

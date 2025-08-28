@@ -1,4 +1,4 @@
-package com.example.pib2.Users.model.Entity.TypeClient;
+package com.example.pib2.Users.model.Entity.TypeDocument;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,16 +21,16 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TipoClientes {
+public class TipoDocumento {
 
-     @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idTipoCliente;
+    private Long IdTipoDocumento;
 
-    @Column(name = "TipoCliente", length = 100, nullable = false)
-    private String tipoCliente;
+    @Column(name= "TipoDocumento", length=100, nullable=false)
+    private String TipoDocumento;
 
-    @OneToMany(mappedBy = "tipoCliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "tipoDocumento", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
     private List<Clientes> clientes = new ArrayList<>();
 }

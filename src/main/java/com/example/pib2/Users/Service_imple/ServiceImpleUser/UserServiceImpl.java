@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,6 @@ import com.example.pib2.Users.repository.TypeClienteRepository.TypeClienteReposi
 import com.example.pib2.Users.repository.TypeDocumentRepository.TypeDocumentRepository;
 import com.example.pib2.Users.repository.UsersRepository.UserRepository;
 import com.example.pib2.Users.service.ServiceUser.UserService;
-
 
 @Service
 
@@ -123,7 +123,7 @@ public class UserServiceImpl implements UserService {
             cliente.setFechaNacimiento(clientUpdate.getFechaNacimiento());
         }
 
-        if(clientUpdate.getTelefono()!=null){
+        if (clientUpdate.getTelefono() != null) {
             cliente.setTelefono(clientUpdate.getTelefono());
         }
 
@@ -141,16 +141,72 @@ public class UserServiceImpl implements UserService {
         }
         return userRepository.save(cliente);
     }
+
     //Método para actualizar el estado de los clientes (Eliminado Lógico)
     @Override
-   public Boolean UpdateStatusCliente(Long idCliente, Boolean activo) {
-    try {
-        int filas = userRepository.UpdateStatusCliente(idCliente, activo);
-        return filas > 0;
-    } catch (Exception e) {
-        System.err.println("Error al actualizar estado del cliente: " + e.getMessage());
-        return false;
+    public Boolean UpdateStatusCliente(Long idCliente, Boolean activo) {
+        try {
+            int filas = userRepository.UpdateStatusCliente(idCliente, activo);
+            return filas > 0;
+        } catch (Exception e) {
+            System.err.println("Error al actualizar estado del cliente: " + e.getMessage());
+            return false;
+        }
     }
+    //Metodo para buscar a un cliente por documento
+    @Override
+    public List<ClientsDTO> getClientByNumeroDocumento(String numeroDocumento) {
+        return userRepository.getClientByNumeroDocumento(numeroDocumento)
+            .stream()
+            .map(cliente -> ClientsDTO.builder()
+            .idCliente(cliente.getIdCliente())
+            .nombreCompleto(cliente.getNombreCompleto())
+            .telefono(cliente.getTelefono())
+            .numeroDocumento(cliente.getNumeroDocumento())
+            .activo(cliente.getActivo())
+            .fechaNacimiento(cliente.getFechaNacimiento())
+             .idTipoCliente(
+                        cliente.getTipoCliente() != null
+                        ? cliente.getTipoCliente().getIdTipoCliente() : null)
+                .tipoClienteDescripcion(
+                        cliente.getTipoCliente() != null
+                        ? cliente.getTipoCliente().getTipoCliente() : null)
+                .idTipoDocumento(cliente.getTipoDocumento() != null
+                        ? cliente.getTipoDocumento().getIdTipoDocumento() : null)
+                .tipoDocumentoDescripcion(cliente.getTipoDocumento() != null
+                        ? cliente.getTipoDocumento().getTipoDocumento() : null)
+                .Email(cliente.getCredenciales() != null
+                        ? cliente.getCredenciales().getEmail() : null)                       
+            .build()).collect(Collectors.toList());
     }
+
+    @Override
+    public List<ClientsDTO> findByIdCliente(Long idCliente) {
+        return userRepository.findByIdCliente(idCliente)
+            .stream()
+            .map(cliente -> ClientsDTO.builder()
+            .idCliente(cliente.getIdCliente())
+            .nombreCompleto(cliente.getNombreCompleto())
+            .telefono(cliente.getTelefono())
+            .numeroDocumento(cliente.getNumeroDocumento())
+            .activo(cliente.getActivo())
+            .fechaNacimiento(cliente.getFechaNacimiento())
+             .idTipoCliente(
+                        cliente.getTipoCliente() != null
+                        ? cliente.getTipoCliente().getIdTipoCliente() : null)
+                .tipoClienteDescripcion(
+                        cliente.getTipoCliente() != null
+                        ? cliente.getTipoCliente().getTipoCliente() : null)
+                .idTipoDocumento(cliente.getTipoDocumento() != null
+                        ? cliente.getTipoDocumento().getIdTipoDocumento() : null)
+                .tipoDocumentoDescripcion(cliente.getTipoDocumento() != null
+                        ? cliente.getTipoDocumento().getTipoDocumento() : null)
+                .Email(cliente.getCredenciales() != null
+                        ? cliente.getCredenciales().getEmail() : null)                       
+            .build()).collect(Collectors.toList());
+    }
+
+    //Método para consultar clientes por idCliente
+    
 
 }

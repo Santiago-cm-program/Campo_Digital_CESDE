@@ -54,17 +54,32 @@ public class UserController {
     }
 
     @PutMapping("PUT/{id}/activo")
-    public ResponseEntity<String> UpdateStatusCliente (@PathVariable("id") Long idCliente,
-        @RequestParam("activo") boolean activo) {
-        
-            boolean updateStatus = userService.UpdateStatusCliente(idCliente,activo);
-            if(updateStatus){
-                return ResponseEntity.ok("Estado actualizado correctamente.");
+    public ResponseEntity<String> UpdateStatusCliente(@PathVariable("id") Long idCliente,
+            @RequestParam("activo") boolean activo) {
+
+        boolean updateStatus = userService.UpdateStatusCliente(idCliente, activo);
+        if (updateStatus) {
+            return ResponseEntity.ok("Estado actualizado correctamente.");
         } else {
             return ResponseEntity.badRequest().body("No se encontró el cliente.");
         }
-            
-        
-        
     }
+
+    @GetMapping("GET/Documento/{numeroDocumento}")
+    public ResponseEntity<List<ClientsDTO>> getByNumberDocument(@PathVariable String numeroDocumento) {
+        List<ClientsDTO> client = userService.getClientByNumeroDocumento(numeroDocumento);
+        return ResponseEntity.ok(client);
+    }
+
+    @GetMapping("GET/IdCliente/{idCliente}")
+    public ResponseEntity<List<ClientsDTO>> findByIdCliente(@PathVariable Long idCliente) {
+        List<ClientsDTO> client = userService.findByIdCliente(idCliente);
+
+        if (!client.isEmpty()) {
+            return ResponseEntity.ok(client); // 200 OK
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(client); 
+        }
+    }
+
 }

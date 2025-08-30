@@ -17,12 +17,12 @@ public class Categorias {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IdCategoria")
-    private Integer idCategoria;
+    private Long idCategoria;
 
     @Column(name = "Categoria", nullable = false, length = 50)
     private String categoria;
 
     @Column(nullable = false)
-    private Boolean isActive;
+    private boolean isActive;
 
 }

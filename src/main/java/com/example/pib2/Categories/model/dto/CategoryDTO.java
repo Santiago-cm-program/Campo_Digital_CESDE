@@ -10,6 +10,7 @@ import lombok.Builder;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryDTO {
-    private Integer categoryId;
+    private Long categoryId;
     private String category;
+    private boolean isActive;
 }

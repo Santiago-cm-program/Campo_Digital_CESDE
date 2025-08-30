@@ -1,6 +1,5 @@
 package com.example.pib2.Users.model.Entity.User;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import com.example.pib2.Users.model.Entity.Credentials.Credenciales;

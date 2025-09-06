@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.pib2.Users.model.dto.TypeClientsDTO.TypeClientsDTO;
 import com.example.pib2.Users.service.serviceTypeClient.TypeClienteService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("v1/api/typeclient")
 public class TypeClientsController {
@@ -20,6 +22,7 @@ public class TypeClientsController {
     private TypeClienteService typeClienteService;
 
     @GetMapping()
+    @Operation(summary="Obtener todos los tipos de clientes",description= "EndPoint que te permite obtener todos los tipos de cliente que puede ser un usuario")
     public ResponseEntity<List<TypeClientsDTO>> getTypeClient() {
         List<TypeClientsDTO> typeClient = typeClienteService.getAllTypeClients();
         return new ResponseEntity<>(typeClient, HttpStatus.OK);

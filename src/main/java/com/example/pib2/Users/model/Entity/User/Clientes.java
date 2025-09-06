@@ -2,6 +2,7 @@ package com.example.pib2.Users.model.Entity.User;
 
 import java.util.Date;
 
+import com.example.pib2.Access.Roles;
 import com.example.pib2.Users.model.Entity.Credentials.Credenciales;
 import com.example.pib2.Users.model.Entity.TypeClient.TipoClientes;
 import com.example.pib2.Users.model.Entity.TypeDocument.TipoDocumento;
@@ -66,4 +67,8 @@ public class Clientes {
 
     @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     private Credenciales credenciales;
+    
+    @OneToOne
+    @JoinColumn(name = "IdRol", unique = true, nullable = false)
+    private Roles rol;
 }

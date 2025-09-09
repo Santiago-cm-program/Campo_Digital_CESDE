@@ -1,7 +1,9 @@
 package com.example.pib2.Access;
 
 import java.sql.Date;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,10 +15,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Setter
 @Getter
 @Builder

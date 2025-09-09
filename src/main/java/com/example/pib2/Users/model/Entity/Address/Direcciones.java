@@ -1,7 +1,7 @@
 package com.example.pib2.Users.model.Entity.Address;
 
 import com.example.pib2.Users.model.Entity.Cities.Ciudades;
-import com.example.pib2.Users.model.Entity.User.Clientes;
+import com.example.pib2.Users.model.Entity.User.Users;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,7 +31,7 @@ public class Direcciones {
 
     @ManyToOne
     @JoinColumn(name = "IdCliente", referencedColumnName = "idCliente", nullable = false)
-    private Clientes cliente;
+    private Users cliente;
 
     @Column(name = "Descripcion", length = 255)
     private String descripcion;

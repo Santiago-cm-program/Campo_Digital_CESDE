@@ -13,9 +13,11 @@ import com.example.pib2.Users.model.dto.TypeClientsDTO.TypeClientsDTO;
 import com.example.pib2.Users.service.serviceTypeClient.TypeClienteService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
 @RequestMapping("v1/api/typeclient")
+@SecurityRequirement(name="basicAuth")
 public class TypeClientsController {
 
     @Autowired

@@ -13,10 +13,12 @@ import com.example.pib2.Users.model.dto.TipoDocument.TypeDocumentsDTO;
 import com.example.pib2.Users.service.ServiceTypeDocument.TypeDocumentService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 
 @RestController
 @RequestMapping("v1/api/TypeDocumento")
+@SecurityRequirement(name="basicAuth")
 public class TypeDocumentController {
     
     @Autowired

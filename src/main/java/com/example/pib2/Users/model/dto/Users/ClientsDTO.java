@@ -31,6 +31,7 @@ public class ClientsDTO {
     private String numeroDocumento;
     private Boolean activo;
     private Date fechaNacimiento;
+    private String Username;
 
     private String Email;
 

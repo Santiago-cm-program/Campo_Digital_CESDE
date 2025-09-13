@@ -14,6 +14,7 @@ public class ProductDTO {
     private Long idProducto;
     private String producto;
     private String descripcion;
+    private double precio;
     private String image;
     private String idUnidad;
     private Boolean isActive;

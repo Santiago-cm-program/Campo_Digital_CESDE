@@ -3,7 +3,7 @@ package com.example.pib2.Users.model.Entity.TypeDocument;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.pib2.Users.model.Entity.User.Clientes;
+import com.example.pib2.Users.model.Entity.User.Users;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.CascadeType;
@@ -32,5 +32,5 @@ public class TipoDocumento {
 
     @OneToMany(mappedBy = "tipoDocumento", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
-    private List<Clientes> clientes = new ArrayList<>();
+    private List<Users> clientes = new ArrayList<>();
 }

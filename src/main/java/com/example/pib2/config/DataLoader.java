@@ -76,7 +76,7 @@ public class DataLoader implements CommandLineRunner {
             TipoClientes tipoCliente = tipoClienteRepository.findById(4L).orElse(null);
             TipoDocumento tipoDocumento = tipoDocumentoRepository.findById(6L).orElse(null);
             Roles rol = new Roles();
-            rol.setDescripcion("ADMIN");
+            rol.setDescripcion("CLIENTE");
             rol.setActivo(true);
             rol.setFechaCreacion(new java.sql.Date(System.currentTimeMillis()));
             accessRepository.save(rol);
@@ -110,7 +110,7 @@ public class DataLoader implements CommandLineRunner {
             TipoClientes tipoCliente = tipoClienteRepository.findById(4L).orElse(null);
             TipoDocumento tipoDocumento = tipoDocumentoRepository.findById(6L).orElse(null);
             Roles rol = new Roles();
-            rol.setDescripcion("ADMIN");
+            rol.setDescripcion("PROVEEDOR");
             rol.setActivo(true);
             rol.setFechaCreacion(new java.sql.Date(System.currentTimeMillis()));
             accessRepository.save(rol);

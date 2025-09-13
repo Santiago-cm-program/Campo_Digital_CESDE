@@ -23,6 +23,7 @@ public class ProductServiceImpl implements ProductService {
         dto.setIdProducto(product.getId_producto());
         dto.setProducto(product.getProducto());
         dto.setDescripcion(product.getDescripcion());
+        dto.setPrecio(product.getPrecio());
         dto.setImage(product.getImage());
         dto.setIdUnidad(product.getIdUnidad());
         dto.setIsActive(product.isActive());
@@ -36,6 +37,7 @@ public class ProductServiceImpl implements ProductService {
         Product.setId_producto(dto.getIdProducto());
         Product.setProducto(dto.getProducto());
         Product.setDescripcion(dto.getDescripcion());
+        Product.setPrecio(dto.getPrecio());
         Product.setImage(dto.getImage());
         Product.setIdUnidad(dto.getIdUnidad());
         Product.setActive(dto.getIsActive());
@@ -85,6 +87,9 @@ public class ProductServiceImpl implements ProductService {
                 }
                 if (productDTO.getDescripcion() != null) {
                     existing.setDescripcion(productDTO.getDescripcion());
+                }
+                if (productDTO.getPrecio() != 0) {
+                    existing.setPrecio(productDTO.getPrecio());
                 }
                 if (productDTO.getImage() != null) {
                     existing.setImage(productDTO.getImage());

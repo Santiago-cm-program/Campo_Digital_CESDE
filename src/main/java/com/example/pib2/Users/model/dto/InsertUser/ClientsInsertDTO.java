@@ -24,7 +24,6 @@ public class ClientsInsertDTO {
     private String numeroDocumento;
     private Boolean activo;
     private Date fechaNacimiento;
-    private String username;  
     private String Email;
     private String contrasena;
     private Long idRol; //Llave foranea

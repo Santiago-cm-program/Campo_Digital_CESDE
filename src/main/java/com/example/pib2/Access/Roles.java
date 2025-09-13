@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.util.List;
 
 import com.example.pib2.Users.model.Entity.User.Users;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -40,11 +39,7 @@ public class Roles {
     private Date fechaCreacion;
 
     @Column(name = "Activo")
-    private Boolean activo;
-
-    @OneToMany(mappedBy = "rol", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<PermisoRol> permisos;
+    private Boolean activo;   
 
     @OneToMany(mappedBy = "rol", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Users> clientes;

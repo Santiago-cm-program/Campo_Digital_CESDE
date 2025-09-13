@@ -3,10 +3,11 @@ package com.example.pib2.Users.Service_imple.ServiceImpleUser;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import com.example.pib2.Access.Roles;
+import com.example.pib2.Access.AccessRepository.AccessRepository;
 import com.example.pib2.Users.model.Entity.TypeClient.TipoClientes;
 import com.example.pib2.Users.model.Entity.TypeDocument.TipoDocumento;
 import com.example.pib2.Users.model.Entity.User.Users;
@@ -26,13 +27,18 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final TypeClienteRepository typeClienteRepository;
     private final TypeDocumentRepository typeDocumentRepository;
+    private final AccessRepository accessRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public UserServiceImpl(UserRepository userRepository,
             TypeClienteRepository typeClienteRepository,
-            TypeDocumentRepository typeDocumentRepository) {
+            TypeDocumentRepository typeDocumentRepository,
+            AccessRepository accessRepository) {
         this.userRepository = userRepository;
         this.typeClienteRepository = typeClienteRepository;
         this.typeDocumentRepository = typeDocumentRepository;
+        this.accessRepository = accessRepository;
     }
 //Metodo Get para obtener toda la información del usuario
 
@@ -68,6 +74,7 @@ public class UserServiceImpl implements UserService {
 
         Optional<TipoClientes> tipoClienteOptional = typeClienteRepository.findById(clienteInsert.getIdTipoCliente());
         Optional<TipoDocumento> tipoDocumentoOptional = typeDocumentRepository.findById(clienteInsert.getIdTipoDocumento());
+        Optional<Roles> tiporol = accessRepository.findById(clienteInsert.getIdRol());
 
         // Si alguna de las entidades no se encuentra, retornamos null.
         if (tipoClienteOptional.isEmpty() || tipoDocumentoOptional.isEmpty()) {
@@ -76,7 +83,8 @@ public class UserServiceImpl implements UserService {
 
         // Obtener los objetos de los Optional si están presentes.
         TipoClientes tipoCliente = tipoClienteOptional.get();
-        TipoDocumento tipoDocumento = tipoDocumentoOptional.get();
+        TipoDocumento tipoDocumento = tipoDocumentoOptional.get();        
+        Roles  rol = tiporol.get();
 
         Users cliente = new Users();
         cliente.setNombreCompleto(clienteInsert.getNombreCompleto());
@@ -87,8 +95,13 @@ public class UserServiceImpl implements UserService {
         cliente.setUsername(clienteInsert.getUsername());
         cliente.setTipoCliente(tipoCliente);
         cliente.setTipoDocumento(tipoDocumento);
+        cliente.setEmail(clienteInsert.getEmail());
+        cliente.setPassword(passwordEncoder.encode(clienteInsert.getContrasena()));
+        cliente.setRol(rol);
+
 
         return userRepository.save(cliente);
+        
     }
 
     //Metodo para Actualizar la información de un cliente
@@ -98,7 +111,9 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new RuntimeException("Cliente no encontrado con id: " + idCliente));
         cliente.setNombreCompleto(clientUpdate.getNombreCompleto());
         cliente.setNumeroDocumento(clientUpdate.getNumeroDocumento());
-        cliente.setFechaNacimiento(clientUpdate.getFechaNacimiento());
+        cliente.setTelefono(clientUpdate.getTelefono());
+        cliente.setPassword(clientUpdate.getContrasena());
+        
 
         if (clientUpdate.getNombreCompleto() != null) {
             cliente.setNombreCompleto(clientUpdate.getNombreCompleto());
@@ -106,14 +121,13 @@ public class UserServiceImpl implements UserService {
 
         if (clientUpdate.getNumeroDocumento() != null) {
             cliente.setNumeroDocumento(clientUpdate.getNumeroDocumento());
-        }
-
-        if (clientUpdate.getFechaNacimiento() != null) {
-            cliente.setFechaNacimiento(clientUpdate.getFechaNacimiento());
-        }
+        }       
 
         if (clientUpdate.getTelefono() != null) {
             cliente.setTelefono(clientUpdate.getTelefono());
+        }
+        if(clientUpdate.getContrasena()!= null){
+            cliente.setPassword(clientUpdate.getContrasena());
         }
         return userRepository.save(cliente);
     }
@@ -154,7 +168,7 @@ public class UserServiceImpl implements UserService {
                         ? cliente.getTipoDocumento().getTipoDocumento() : null)
                 .build()).collect(Collectors.toList());
     }
-
+    //Método para buscar cliente por id
     @Override
     public List<ClientsDTO> findByIdCliente(Long idCliente) {
         return userRepository.findByIdCliente(idCliente)
@@ -179,5 +193,5 @@ public class UserServiceImpl implements UserService {
                 .build()).collect(Collectors.toList());
     }
 
-    //Método para consultar clientes por idCliente
+    
 }

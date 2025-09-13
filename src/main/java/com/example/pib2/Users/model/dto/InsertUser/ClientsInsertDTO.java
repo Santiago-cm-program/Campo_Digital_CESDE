@@ -27,4 +27,5 @@ public class ClientsInsertDTO {
     private String username;  
     private String Email;
     private String contrasena;
+    private Long idRol; //Llave foranea
 }

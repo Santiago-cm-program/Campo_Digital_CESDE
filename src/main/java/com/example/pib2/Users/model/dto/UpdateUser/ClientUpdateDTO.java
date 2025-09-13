@@ -23,4 +23,5 @@ public class ClientUpdateDTO {
     private String telefono;
     private String contrasena;
     private String email;    
+   
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.pib2.Users.model.Entity.User.Users;
 import com.example.pib2.Users.model.dto.InsertUser.ClientsInsertDTO;
+import com.example.pib2.Users.model.dto.UpdateClientStatus.UpdateClientStatusDTO;
 import com.example.pib2.Users.model.dto.UpdateUser.ClientUpdateDTO;
 import com.example.pib2.Users.model.dto.Users.ClientsDTO;
 
@@ -19,7 +20,7 @@ public interface UserService {
     Users updateClient(Long idCliente, ClientUpdateDTO clientUpdate);
 
     //Inactivación del cliente
-    Boolean UpdateStatusCliente(Long idCliente, Boolean activo);
+    boolean UpdateStatusCliente(Long idCliente, UpdateClientStatusDTO clientUpdateStatus);
 
     // Consultar cliente por numero de documento 
     List<ClientsDTO> getClientByNumeroDocumento(String numeroDocumento);

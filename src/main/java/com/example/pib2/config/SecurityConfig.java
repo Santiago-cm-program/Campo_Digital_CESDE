@@ -44,11 +44,12 @@ public class SecurityConfig {
                 //End Point para rol de admin
                 .requestMatchers("/v1/api/typeclient/**").hasRole("ADMIN")
                 .requestMatchers("/v1/api/TypeDocumento/**").hasRole("ADMIN")
-                .requestMatchers("/v1/Get/Users/**").hasRole("ADMIN")
-                .requestMatchers("/v1/PUT/User/{id}/**").hasRole("ADMIN")
-                .requestMatchers("/v1/PUT/{id}/activo/**").hasRole("ADMIN")
-                .requestMatchers("/v1/GET/Documento/{numeroDocumento}/**").hasRole("ADMIN")
-                .requestMatchers("/v1/GET/IdCliente/{idCliente}/**").hasRole("ADMIN")
+                .requestMatchers("/v1/api/Users/PUT/{id}/**").hasRole("ADMIN")
+                .requestMatchers("/v1/api/Users/PATCH/{id}/activo/**").hasRole("ADMIN")
+                .requestMatchers("/v1/api/Users/POST/**").hasRole("ADMIN")
+                .requestMatchers("/v1/api/Users/Get/**").hasRole("ADMIN")
+                .requestMatchers("/v1/api/Users/GET/IdCliente/{idCliente}/**").hasRole("ADMIN")
+                .requestMatchers("/v1/api/Users/GET/Documento/{numeroDocumento}/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 )
                 //Configurar autenticación HTTP Basic

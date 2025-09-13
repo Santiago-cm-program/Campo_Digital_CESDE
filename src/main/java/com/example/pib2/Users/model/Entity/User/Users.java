@@ -82,6 +82,7 @@ public class Users implements UserDetails {
     private LocalDateTime fechaCreacion;
 
     @ManyToOne
+    @JsonManagedReference // importante para evita el bucle
     @JoinColumn(name = "IdRol", unique = true, nullable = false)
     private Roles rol;
 

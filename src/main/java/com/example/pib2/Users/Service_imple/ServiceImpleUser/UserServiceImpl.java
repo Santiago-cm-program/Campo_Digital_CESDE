@@ -12,6 +12,7 @@ import com.example.pib2.Users.model.Entity.TypeClient.TipoClientes;
 import com.example.pib2.Users.model.Entity.TypeDocument.TipoDocumento;
 import com.example.pib2.Users.model.Entity.User.Users;
 import com.example.pib2.Users.model.dto.InsertUser.ClientsInsertDTO;
+import com.example.pib2.Users.model.dto.UpdateClientStatus.UpdateClientStatusDTO;
 import com.example.pib2.Users.model.dto.UpdateUser.ClientUpdateDTO;
 import com.example.pib2.Users.model.dto.Users.ClientsDTO;
 import com.example.pib2.Users.repository.TypeClienteRepository.TypeClienteRepository;
@@ -92,7 +93,7 @@ public class UserServiceImpl implements UserService {
         cliente.setNumeroDocumento(clienteInsert.getNumeroDocumento());
         cliente.setFechaNacimiento(clienteInsert.getFechaNacimiento());
         cliente.setActivo(clienteInsert.getActivo());
-        cliente.setUsername(clienteInsert.getUsername());
+        cliente.setUsername(clienteInsert.getEmail());
         cliente.setTipoCliente(tipoCliente);
         cliente.setTipoDocumento(tipoDocumento);
         cliente.setEmail(clienteInsert.getEmail());
@@ -127,22 +128,10 @@ public class UserServiceImpl implements UserService {
             cliente.setTelefono(clientUpdate.getTelefono());
         }
         if(clientUpdate.getContrasena()!= null){
-            cliente.setPassword(clientUpdate.getContrasena());
+            cliente.setPassword(passwordEncoder.encode((clientUpdate.getContrasena())));
         }
         return userRepository.save(cliente);
-    }
-
-    //Método para actualizar el estado de los clientes (Eliminado Lógico)
-    @Override
-    public Boolean UpdateStatusCliente(Long idCliente, Boolean activo) {
-        try {
-            int filas = userRepository.UpdateStatusCliente(idCliente, activo);
-            return filas > 0;
-        } catch (Exception e) {
-            System.err.println("Error al actualizar estado del cliente: " + e.getMessage());
-            return false;
-        }
-    }
+    }   
 
     //Metodo para buscar a un cliente por documento
     @Override
@@ -191,6 +180,15 @@ public class UserServiceImpl implements UserService {
                 .tipoDocumentoDescripcion(cliente.getTipoDocumento() != null
                         ? cliente.getTipoDocumento().getTipoDocumento() : null)
                 .build()).collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean UpdateStatusCliente(Long idCliente, UpdateClientStatusDTO clientUpdateStatus) {
+         Users cliente =  userRepository.findById(idCliente)
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado con id: " + idCliente));
+        cliente.setActivo(clientUpdateStatus.isActivo());
+        userRepository.save(cliente);
+        return true;
     }
 
     

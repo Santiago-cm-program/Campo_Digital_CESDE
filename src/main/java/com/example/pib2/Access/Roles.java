@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 
 import com.example.pib2.Users.model.Entity.User.Users;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -41,6 +42,7 @@ public class Roles {
     @Column(name = "Activo")
     private Boolean activo;   
 
+    @JsonBackReference// importante para evitar el bucle
     @OneToMany(mappedBy = "rol", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Users> clientes;
 

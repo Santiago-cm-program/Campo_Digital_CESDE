@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddressDTO {
-    private Long idDireccion;
-    private String codigoCiudad;    
-    private Long idCliente;         
-    private String descripcion;
+
+    private String codigoCiudad; // FK hacia Ciudades
+    private String descripcion; // dirección detallada
+
 }

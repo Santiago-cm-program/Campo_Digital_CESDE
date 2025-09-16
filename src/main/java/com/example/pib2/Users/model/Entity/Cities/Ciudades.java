@@ -1,6 +1,7 @@
 package com.example.pib2.Users.model.Entity.Cities;
 
 import com.example.pib2.Users.model.Entity.Departments.Departamentos;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,10 +19,12 @@ import lombok.NoArgsConstructor;
 public class Ciudades {
 
     @Id
+    @JsonBackReference
     @Column(name = "CodigoCiudad")
     private String codigoCiudad;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "CodigoDepartamento", referencedColumnName = "codigoDepartamento", nullable = false)
     private Departamentos departamento;
 

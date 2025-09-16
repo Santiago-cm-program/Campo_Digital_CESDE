@@ -1,8 +1,6 @@
 package com.example.pib2.config;
 
 import java.sql.Date;
-import java.time.LocalDate;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -54,7 +52,6 @@ public class DataLoader implements CommandLineRunner {
             admin.setNombreCompleto("Santiago Correa Mejia");
             admin.setNumeroDocumento("1020485975");
             admin.setActivo(true);
-            admin.setFechaCreacion(LocalDate.now().atStartOfDay());
             admin.setPassword(passwordEncoder.encode("980522Sc"));
             admin.setFechaNacimiento(Date.valueOf("1995-09-05"));
             admin.setEnabled(true);
@@ -88,7 +85,6 @@ public class DataLoader implements CommandLineRunner {
             admin.setNombreCompleto("Julian Vallejo");
             admin.setNumeroDocumento("1030456214");
             admin.setActivo(true);
-            admin.setFechaCreacion(LocalDate.now().atStartOfDay());
             admin.setPassword(passwordEncoder.encode("Colombia123*"));
             admin.setFechaNacimiento(Date.valueOf("1995-09-05"));
             admin.setEnabled(true);
@@ -122,7 +118,6 @@ public class DataLoader implements CommandLineRunner {
             admin.setNombreCompleto("Cristian Bedoya");
             admin.setNumeroDocumento("1030456214");
             admin.setActivo(true);
-            admin.setFechaCreacion(LocalDate.now().atStartOfDay());
             admin.setPassword(passwordEncoder.encode("Colombia123*"));
             admin.setFechaNacimiento(Date.valueOf("1995-09-05"));
             admin.setEnabled(true);

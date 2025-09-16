@@ -2,6 +2,8 @@ package com.example.pib2.Users.model.Entity.Address;
 
 import com.example.pib2.Users.model.Entity.Cities.Ciudades;
 import com.example.pib2.Users.model.Entity.User.Users;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,11 +28,13 @@ public class Direcciones {
     private Long idDireccion;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "CodigoCiudad", referencedColumnName = "codigoCiudad", nullable = false)
     private Ciudades codigoCiudad;
 
     @ManyToOne
     @JoinColumn(name = "IdCliente", referencedColumnName = "idCliente", nullable = false)
+    @JsonBackReference
     private Users cliente;
 
     @Column(name = "Descripcion", length = 255)

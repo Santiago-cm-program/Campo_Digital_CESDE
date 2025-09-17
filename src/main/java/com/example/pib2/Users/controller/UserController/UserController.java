@@ -27,9 +27,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000") 
 @RequestMapping("v1/api/Users")
 @SecurityRequirement(name = "basicAuth")
-@CrossOrigin(origins = "*")
 public class UserController {
 
     @Autowired

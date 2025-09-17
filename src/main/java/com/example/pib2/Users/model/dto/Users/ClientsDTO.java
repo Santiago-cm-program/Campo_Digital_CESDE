@@ -2,6 +2,7 @@ package com.example.pib2.Users.model.dto.Users;
 
 import java.util.Date;
 
+import com.example.pib2.Access.Roles;
 import com.example.pib2.Users.model.dto.Address.AddressDTO;
 
 import lombok.AllArgsConstructor;
@@ -30,7 +31,10 @@ public class ClientsDTO {
     private String numeroDocumento;
     private Boolean activo;
     private Date fechaNacimiento;
-    private String Username;
+    private String username;
     private String Email;
+    private String password;
+    private Roles rol;
     private AddressDTO direccion;   
+    
 }

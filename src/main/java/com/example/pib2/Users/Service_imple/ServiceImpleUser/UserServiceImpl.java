@@ -16,6 +16,7 @@ import com.example.pib2.Users.model.Entity.TypeDocument.TipoDocumento;
 import com.example.pib2.Users.model.Entity.User.Users;
 import com.example.pib2.Users.model.dto.Address.AddressDTO;
 import com.example.pib2.Users.model.dto.InsertUser.ClientsInsertDTO;
+import com.example.pib2.Users.model.dto.LoginUserDTO.UserLoginDTO;
 import com.example.pib2.Users.model.dto.UpdateClientStatus.UpdateClientStatusDTO;
 import com.example.pib2.Users.model.dto.UpdateUser.ClientUpdateDTO;
 import com.example.pib2.Users.model.dto.Users.ClientsDTO;
@@ -66,7 +67,7 @@ public class UserServiceImpl implements UserService {
                                                 .numeroDocumento(cliente.getNumeroDocumento())
                                                 .activo(cliente.getActivo())
                                                 .fechaNacimiento(cliente.getFechaNacimiento())
-                                                .Username(cliente.getUsername())
+                                                .username(cliente.getUsername())
                                                 .Email(cliente.getEmail())
                                                 .idTipoCliente(
                                                                 cliente.getTipoCliente() != null
@@ -114,7 +115,7 @@ public class UserServiceImpl implements UserService {
                 cliente.setTipoCliente(tipoClienteOptional.get());
                 cliente.setTipoDocumento(tipoDocumentoOptional.get());
                 cliente.setEmail(clienteInsert.getEmail());
-                cliente.setPassword(passwordEncoder.encode(clienteInsert.getContrasena()));
+                cliente.setPassword(passwordEncoder.encode(clienteInsert.getPassword()));
                 cliente.setFechaCreacion(LocalDate.now());
                 cliente.setRol(tiporol.get());
 
@@ -227,6 +228,7 @@ public class UserServiceImpl implements UserService {
                                 .collect(Collectors.toList());
         }
 
+        // Metodo para actualizar el estado del clientes
         @Override
         public boolean UpdateStatusCliente(Long idCliente, UpdateClientStatusDTO clientUpdateStatus) {
                 Users cliente = userRepository.findById(idCliente)
@@ -234,6 +236,31 @@ public class UserServiceImpl implements UserService {
                 cliente.setActivo(clientUpdateStatus.isActivo());
                 userRepository.save(cliente);
                 return true;
+        }
+        // Metodo para autenticación
+
+        @Override
+        public Optional<ClientsDTO> findByUsername(UserLoginDTO loginUser) {
+                return userRepository.findByUsername(loginUser.getUsername())
+                                .filter(user -> passwordEncoder.matches(
+                                                loginUser.getPassword(),
+                                                user.getPassword()))
+                                .map(user -> ClientsDTO.builder()
+                                                .idCliente(user.getIdCliente())
+                                                .nombreCompleto(user.getNombreCompleto())
+                                                .activo(user.getActivo())
+                                                .username(user.getUsername())
+                                                .rol(user.getRol())
+                                                .password(user.getPassword())
+                                                .direccion(user.getDirecciones()
+                                                                .stream()
+                                                                .findFirst()
+                                                                .map(dir -> AddressDTO.builder()
+                                                                                .codigoCiudad(dir.getCodigoCiudad().getCodigoCiudad())
+                                                                                .descripcion(dir.getDescripcion())
+                                                                                .build())
+                                                                .orElse(null))
+                                                .build());
         }
 
 }

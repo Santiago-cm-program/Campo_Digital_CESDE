@@ -27,7 +27,7 @@ public class ClientsInsertDTO {
     private Boolean activo;
     private Date fechaNacimiento;    
     private String email;
-    private String contrasena;
+    private String password;
     private Long idRol;             // llave foranea
     private AddressDTO direccion;   // objeto anidado
     

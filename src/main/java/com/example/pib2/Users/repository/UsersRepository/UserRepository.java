@@ -26,6 +26,6 @@ public interface UserRepository extends JpaRepository<Users, Long> {
     //Metodo para obtener cliente por id
     List<Users> findByIdCliente(Long idCliente);
 
-    Optional<Users> findByUsername(String username);
+    Optional<Users> findByUsername(String username); 
 
 }

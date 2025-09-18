@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.pib2.Users.model.Entity.User.Users;
 import com.example.pib2.Users.model.dto.InsertUser.ClientsInsertDTO;
+import com.example.pib2.Users.model.dto.LoginUserDTO.UserLoginDTO;
 import com.example.pib2.Users.model.dto.UpdateClientStatus.UpdateClientStatusDTO;
 import com.example.pib2.Users.model.dto.UpdateUser.ClientUpdateDTO;
 import com.example.pib2.Users.model.dto.Users.ClientsDTO;
@@ -26,9 +27,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000") 
 @RequestMapping("v1/api/Users")
 @SecurityRequirement(name = "basicAuth")
-@CrossOrigin(origins = "*")
 public class UserController {
 
     @Autowired
@@ -96,5 +97,16 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(client);
         }
     }
+
+  
+    @PostMapping("POST/Login")
+    @Operation(summary = "validar login", description = "End Point para obtener el JSON del usuario")
+    public ResponseEntity<ClientsDTO> LogginAccess(@RequestBody UserLoginDTO loginUser) {
+         return userService.findByUsername(loginUser)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null));
+        
+    }
+    
 
 }

@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,9 +29,11 @@ public class SecurityConfig {
         this.userDetailsService = userDetailsService;
     }
 
+    @SuppressWarnings("removal")
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authz -> authz
                 //End point públicos para desarrollos y monitores
@@ -50,8 +54,8 @@ public class SecurityConfig {
                 .requestMatchers("/v1/api/Users/Get/**").hasRole("ADMIN")
                 .requestMatchers("/v1/api/Users/GET/IdCliente/{idCliente}/**").hasRole("ADMIN")
                 .requestMatchers("/v1/api/Users/GET/Documento/{numeroDocumento}/**").hasRole("ADMIN")
-                .anyRequest().authenticated()
-                )
+                .requestMatchers("/v1/api/Users/POST/Login").permitAll()
+                .anyRequest().authenticated())
                 //Configurar autenticación HTTP Basic
                 .httpBasic(basic -> basic.realmName("PI Backend API"))
                 // Configurar política de sesión como stateless (para APIs REST)
@@ -66,6 +70,17 @@ public class SecurityConfig {
         return http.build();
     }
     @Bean
+    public UrlBasedCorsConfigurationSource corsConfigurationSource() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.addAllowedOrigin("http://localhost:3000"); // Específica el origen de tu frontend
+        config.addAllowedMethod("*");
+        config.addAllowedHeader("*");
+        config.setAllowCredentials(true);
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }        
@@ -75,6 +90,7 @@ public class SecurityConfig {
             AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }
+    @SuppressWarnings("deprecation")
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();

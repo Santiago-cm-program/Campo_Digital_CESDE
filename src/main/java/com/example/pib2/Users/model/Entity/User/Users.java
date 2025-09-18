@@ -1,22 +1,19 @@
 package com.example.pib2.Users.model.Entity.User;
-
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import com.example.pib2.Access.Roles;
-
+import com.example.pib2.Users.model.Entity.Address.Direcciones;
 import com.example.pib2.Users.model.Entity.TypeClient.TipoClientes;
 import com.example.pib2.Users.model.Entity.TypeDocument.TipoDocumento;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,6 +21,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -73,13 +71,17 @@ public class Users implements UserDetails {
     private String username;
 
     @Column(name = "Password", nullable = false)
-    private String Password;
+    private String password;
 
     @Column(name = "Email", nullable = false, length = 255)
     private String email;
 
     @Column(name = "FechaCreacion")
-    private LocalDateTime fechaCreacion;
+    private LocalDate fechaCreacion;
+
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Direcciones> direcciones = new ArrayList<>();
 
     @ManyToOne
     @JsonManagedReference // importante para evita el bucle

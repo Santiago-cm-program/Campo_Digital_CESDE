@@ -62,6 +62,12 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/products/GET/all/**").hasRole("ADMIN")
                 .requestMatchers("/api/v1/products/GET/{id}/**").hasRole("ADMIN")
                 .requestMatchers("/api/v1/products/GET/active/**").permitAll()
+                // Endpoints de categorias
+                .requestMatchers("/api/v1/categories/POST/**").hasRole("ADMIN")
+                .requestMatchers("/api/v1/categories/PUT/{id}/**").hasRole("ADMIN")
+                .requestMatchers("/api/v1/categories/GET/all/**").hasRole("ADMIN")
+                .requestMatchers("/api/v1/categories/GET/{id}/**").hasRole("ADMIN")
+                .requestMatchers("/api/v1/categories/GET/active/**").permitAll()
                 .anyRequest().authenticated())
                 //Configurar autenticación HTTP Basic
                 .httpBasic(basic -> basic.realmName("PI Backend API"))

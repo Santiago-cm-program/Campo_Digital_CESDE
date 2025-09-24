@@ -21,21 +21,21 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/active")
+    @GetMapping("/GET/active")
     @Operation(summary="Obtener todos los productos activos", description="End Point para obtener todos los productos activos de la base de datos")
     public ResponseEntity<List<ProductDTO>> getAllActiveProducts() {
         List<ProductDTO> products = productService.getAllActiveProducts();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/GET/all")
     @Operation(summary="Obtener todos los productos", description="End Point para obtener todos los productos de la base de datos")
     public ResponseEntity<List<ProductDTO>> getAllProducts() {
         List<ProductDTO> products = productService.getAllProducts();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/GET/{id}")
     @Operation(summary="Obtener un producto por ID", description="End Point para obtener un producto por su ID de la base de datos")
     public ResponseEntity<ProductDTO> getProductById(@PathVariable Long id) {
         ProductDTO product = productService.getProductById(id);
@@ -45,14 +45,14 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping
+    @PostMapping("/POST")
     @Operation(summary="Crear un nuevo producto", description="End Point para crear un nuevo producto en la base de datos")
     public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO) {
         ProductDTO created = productService.createProduct(productDTO);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/PATCH/{id}")
     @Operation(summary="Actualizar un producto", description="End Point para actualizar parcialmente un producto existente en la base de datos")
     public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
         ProductDTO updated = productService.updateProduct(id, productDTO);
@@ -62,7 +62,7 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/DELETE/{id}")
     @Operation(summary="Eliminar un producto", description="End Point para eliminar un producto logicamente de la base de datos")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         ProductDTO existing = productService.getProductById(id);

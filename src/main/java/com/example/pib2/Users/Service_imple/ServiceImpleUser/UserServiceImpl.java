@@ -237,8 +237,8 @@ public class UserServiceImpl implements UserService {
                 userRepository.save(cliente);
                 return true;
         }
-        // Metodo para autenticación
 
+        // Metodo para autenticación
         @Override
         public Optional<ClientsDTO> findByUsername(UserLoginDTO loginUser) {
                 return userRepository.findByUsername(loginUser.getUsername())
@@ -252,6 +252,7 @@ public class UserServiceImpl implements UserService {
                                                 .username(user.getUsername())
                                                 .rol(user.getRol())
                                                 .password(user.getPassword())
+                                                .Email(user.getEmail())
                                                 .direccion(user.getDirecciones()
                                                                 .stream()
                                                                 .findFirst()

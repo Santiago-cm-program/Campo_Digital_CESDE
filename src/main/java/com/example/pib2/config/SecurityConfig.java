@@ -36,39 +36,45 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authz -> authz
-                //End point públicos para desarrollos y monitores
-                .requestMatchers("/actuador/**").permitAll()
-                .requestMatchers("/h2-console/**").permitAll()
-                // Endpoints de Swagger/OpenAPI (públicos)
-                .requestMatchers("/swagger-ui/**").permitAll()
-                .requestMatchers("/swagger-ui.html").permitAll()
-                .requestMatchers("/v3/api-docs/**").permitAll()
-                .requestMatchers("/swagger-resources/**").permitAll()
-                .requestMatchers("/webjars/**").permitAll()
-                //End Point para rol de admin
-                .requestMatchers("/v1/api/typeclient/**").hasRole("ADMIN")
-                .requestMatchers("/v1/api/TypeDocumento/**").hasRole("ADMIN")
-                .requestMatchers("/v1/api/Users/PUT/{id}/**").hasRole("ADMIN")
-                .requestMatchers("/v1/api/Users/PATCH/{id}/activo/**").hasRole("ADMIN")
-                .requestMatchers("/v1/api/Users/POST/**").hasRole("ADMIN")
-                .requestMatchers("/v1/api/Users/Get/**").hasRole("ADMIN")
-                .requestMatchers("/v1/api/Users/GET/IdCliente/{idCliente}/**").hasRole("ADMIN")
-                .requestMatchers("/v1/api/Users/GET/Documento/{numeroDocumento}/**").hasRole("ADMIN")
-                .requestMatchers("/v1/api/Users/POST/Login").permitAll()
-                .anyRequest().authenticated())
-                //Configurar autenticación HTTP Basic
+                        // End point públicos para desarrollos y monitores
+                        .requestMatchers("/actuator/**").permitAll()
+                        .requestMatchers("/h2-console/**").permitAll()
+                        // Endpoints de Swagger/OpenAPI (públicos)
+                        .requestMatchers("/swagger-ui/**").permitAll()
+                        .requestMatchers("/swagger-ui.html").permitAll()
+                        .requestMatchers("/v3/api-docs/**").permitAll()
+                        .requestMatchers("/swagger-resources/**").permitAll()
+                        .requestMatchers("/webjars/**").permitAll()
+                        // End Point para rol de admin
+                        .requestMatchers("/v1/api/typeclient/**").hasRole("ADMIN")
+                        .requestMatchers("/v1/api/TypeDocumento/**").hasRole("ADMIN")
+                        .requestMatchers("/v1/api/Users/PUT/{id}/**").hasRole("ADMIN")
+                        .requestMatchers("/v1/api/Users/PATCH/{id}/activo/**").hasRole("ADMIN")
+                        .requestMatchers("/v1/api/Users/POST/**").hasRole("ADMIN")
+                        .requestMatchers("/v1/api/Users/Get/**").hasRole("ADMIN")
+                        .requestMatchers("/v1/api/Users/GET/IdCliente/{idCliente}/**").hasRole("ADMIN")
+                        .requestMatchers("/v1/api/Users/GET/Documento/{numeroDocumento}/**").hasRole("ADMIN")
+                        .requestMatchers("/v1/api/Users/POST/Login").permitAll()
+                        // Endpoints de productos
+                        .requestMatchers("/api/v1/products/GET/active").permitAll()
+                        .requestMatchers("/api/v1/products/**").hasRole("ADMIN")
+                        // Endpoints de categorias
+                        .requestMatchers("/api/v1/categories/GET/active").permitAll()
+                        .requestMatchers("/api/v1/categories/**").hasRole("ADMIN")
+                        .anyRequest().authenticated()
+                )
+                // Configurar autenticación HTTP Basic
                 .httpBasic(basic -> basic.realmName("PI Backend API"))
                 // Configurar política de sesión como stateless (para APIs REST)
                 .sessionManagement(session -> session
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 // Configurar headers para H2 Console (desarrollo)
                 .headers(headers -> headers
-                .frameOptions().sameOrigin()
-                );
+                        .frameOptions().sameOrigin());
 
         return http.build();
     }
+
     @Bean
     public UrlBasedCorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -80,16 +86,18 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", config);
         return source;
     }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }        
+    }
 
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }
+
     @SuppressWarnings("deprecation")
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {

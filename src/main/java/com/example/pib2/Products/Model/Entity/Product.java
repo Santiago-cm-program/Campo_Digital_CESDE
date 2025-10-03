@@ -33,6 +33,9 @@ public class Product {
     @Column(name = "descripcion", nullable = false, length = 100)
     private String descripcion;
 
+    @Column(name = "precio", nullable = false)
+    private double precio;
+
     @Column(name = "image", nullable = false, length = 100)
     private String image;
 

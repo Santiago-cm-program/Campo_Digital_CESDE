@@ -35,7 +35,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("Get")
+    @GetMapping("GET")
     @Operation(summary = "Obtener todos los usuarios", description = "End Point para obtener todos los usuarios de la base de datos")
     public ResponseEntity<List<ClientsDTO>> getTypeDocument() {
         List<ClientsDTO> Clients = userService.getAllClients();

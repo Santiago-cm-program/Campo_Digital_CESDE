@@ -4,11 +4,13 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.example.pib2.Access.Roles;
+
 import com.example.pib2.Access.AccessRepository.AccessRepository;
+import com.example.pib2.Access.Roles;
 import com.example.pib2.Users.model.Entity.Address.Direcciones;
 import com.example.pib2.Users.model.Entity.Cities.Ciudades;
 import com.example.pib2.Users.model.Entity.TypeClient.TipoClientes;
@@ -104,7 +106,7 @@ public class UserServiceImpl implements UserService {
             return null;
         }
         Roles RolDefecto = new Roles();
-        RolDefecto.setIdRol(5);
+        RolDefecto.setIdRol(2);
         // Crear cliente
         Users cliente = new Users();
         cliente.setNombreCompleto(clienteInsert.getNombreCompleto());

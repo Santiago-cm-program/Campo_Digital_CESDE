@@ -15,6 +15,6 @@ public class OpenApiConfig {
                 .info(new Info()
                         .title("API Campo Digital CESDE")
                         .version("1.0.0")
-                        .description("Documentación de la API para el proyecto Campo Digital CESDE"));
+                        .description("Documentación de la API para el proyecto Campo Digital CESDE, Este proyecto trata de un Eccomerce de la agroindustria que quiere poner mas cerca a los campesiones del cliente final."));
     }
 }

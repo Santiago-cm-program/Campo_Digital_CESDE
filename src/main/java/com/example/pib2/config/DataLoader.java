@@ -1,6 +1,7 @@
 package com.example.pib2.config;
 
 import java.sql.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -37,8 +38,8 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
         if (userRepository.findByUsername("SCORREA").isEmpty()) {
 
-            TipoClientes tipoCliente = tipoClienteRepository.findById(4L).orElse(null);
-            TipoDocumento tipoDocumento = tipoDocumentoRepository.findById(6L).orElse(null);
+            TipoClientes tipoCliente = tipoClienteRepository.findById(1L).orElse(null);
+            TipoDocumento tipoDocumento = tipoDocumentoRepository.findById(1L).orElse(null);
             Roles rol = new Roles();
             rol.setDescripcion("ADMIN");
             rol.setActivo(true);
@@ -70,10 +71,10 @@ public class DataLoader implements CommandLineRunner {
 
         if (userRepository.findByUsername("JVALLEJO").isEmpty()) {
 
-            TipoClientes tipoCliente = tipoClienteRepository.findById(4L).orElse(null);
-            TipoDocumento tipoDocumento = tipoDocumentoRepository.findById(6L).orElse(null);
+            TipoClientes tipoCliente = tipoClienteRepository.findById(1L).orElse(null);
+            TipoDocumento tipoDocumento = tipoDocumentoRepository.findById(1L).orElse(null);
             Roles rol = new Roles();
-            rol.setDescripcion("CLIENTE");
+            rol.setDescripcion("ADMIN");
             rol.setActivo(true);
             rol.setFechaCreacion(new java.sql.Date(System.currentTimeMillis()));
             accessRepository.save(rol);
@@ -103,10 +104,10 @@ public class DataLoader implements CommandLineRunner {
 
         if (userRepository.findByUsername("CBEDOYA").isEmpty()) {
 
-            TipoClientes tipoCliente = tipoClienteRepository.findById(4L).orElse(null);
-            TipoDocumento tipoDocumento = tipoDocumentoRepository.findById(6L).orElse(null);
+            TipoClientes tipoCliente = tipoClienteRepository.findById(1L).orElse(null);
+            TipoDocumento tipoDocumento = tipoDocumentoRepository.findById(1L).orElse(null);
             Roles rol = new Roles();
-            rol.setDescripcion("PROVEEDOR");
+            rol.setDescripcion("ADMIN");
             rol.setActivo(true);
             rol.setFechaCreacion(new java.sql.Date(System.currentTimeMillis()));
             accessRepository.save(rol);

@@ -1,5 +1,7 @@
 package com.example.pib2.Products.Model.Entity;
 
+import com.example.pib2.Categories.Model.Entity.Category;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,8 +14,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import com.example.pib2.Categories.Model.Entity.Category;
 
 @Getter
 @Setter
@@ -30,13 +30,13 @@ public class Product {
     @Column(name = "producto", nullable = false, length = 100)
     private String producto;
 
-    @Column(name = "descripcion", nullable = false, length = 100)
+    @Column(name = "descripcion", nullable = false, length = 200)
     private String descripcion;
 
     @Column(name = "precio", nullable = false)
     private double precio;
 
-    @Column(name = "image", nullable = false, length = 100)
+    @Column(name = "image", nullable = false, length = 200)
     private String image;
 
     @Column(name = "id_unidad", nullable = false, length = 100)

@@ -10,12 +10,14 @@ import com.example.pib2.Products.Service.ProductService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000") 
 @SecurityRequirement(name = "basicAuth")
+@Tag(name = "Productos", description = "Endpoints para gestionar los productos")
 @RequestMapping("/api/v1/products")
 public class ProductController {
 

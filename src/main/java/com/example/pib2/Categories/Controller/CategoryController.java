@@ -10,12 +10,14 @@ import com.example.pib2.Categories.Service.CategoryService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000") 
 @SecurityRequirement(name = "basicAuth")
+@Tag(name = "Categorias", description = "Endpoints para gestionar las categorias")
 @RequestMapping("/api/v1/categories")
 public class CategoryController {
 

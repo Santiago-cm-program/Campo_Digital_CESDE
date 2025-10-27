@@ -87,6 +87,7 @@ public class UserServiceImpl implements UserService {
                 .tipoDocumentoDescripcion(cliente.getTipoDocumento() != null
                         ? cliente.getTipoDocumento().getTipoDocumento()
                         : null)
+                .rol(cliente.getRol() != null ? cliente.getRol() : null)
                 .build())
                 .collect(Collectors.toList());
     }

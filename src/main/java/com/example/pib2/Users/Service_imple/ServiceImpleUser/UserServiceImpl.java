@@ -88,6 +88,14 @@ public class UserServiceImpl implements UserService {
                         ? cliente.getTipoDocumento().getTipoDocumento()
                         : null)
                 .rol(cliente.getRol() != null ? cliente.getRol() : null)
+                .direccion(cliente.getDirecciones() != null ? cliente.getDirecciones()
+                        .stream()
+                        .findFirst()
+                        .map(dir -> AddressDTO.builder()
+                        .codigoCiudad(dir.getCodigoCiudad().getCodigoCiudad())
+                        .descripcion(dir.getDescripcion())
+                        .build())
+                        .orElse(null) : null)
                 .build())
                 .collect(Collectors.toList());
     }

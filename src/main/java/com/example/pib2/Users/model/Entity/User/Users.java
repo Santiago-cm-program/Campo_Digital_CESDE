@@ -4,18 +4,22 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import com.example.pib2.Access.Roles;
 import com.example.pib2.Users.model.Entity.Address.Direcciones;
 import com.example.pib2.Users.model.Entity.TypeClient.TipoClientes;
 import com.example.pib2.Users.model.Entity.TypeDocument.TipoDocumento;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -83,7 +87,7 @@ public class Users implements UserDetails {
     @JsonManagedReference
     private List<Direcciones> direcciones = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonManagedReference // importante para evita el bucle
     @JoinColumn(name = "IdRol", unique = true, nullable = false)
     private Roles rol;

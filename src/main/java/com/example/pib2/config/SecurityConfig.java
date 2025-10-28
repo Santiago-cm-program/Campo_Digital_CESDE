@@ -62,6 +62,8 @@ public class SecurityConfig {
                 // Endpoints de categorias
                 .requestMatchers("/api/v1/categories/GET/active").permitAll()
                 .requestMatchers("/api/v1/categories/**").hasRole("ADMIN")
+                .requestMatchers("/api/v1/sales/GET/all").permitAll()
+                .requestMatchers("/api/v1/salesdetails/all").permitAll()
                 .anyRequest().authenticated()
                 )
                 // Configurar autenticación HTTP Basic

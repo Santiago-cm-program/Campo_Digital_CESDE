@@ -14,8 +14,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -33,8 +31,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .csrf(csrf -> csrf.disable())
+                .cors()
+                .and()
+                .csrf().disable()
                 .authorizeHttpRequests(authz -> authz
                 // End point públicos para desarrollos y monitores
                 .requestMatchers("/actuator/**").permitAll()
@@ -78,17 +77,17 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-    public UrlBasedCorsConfigurationSource corsConfigurationSource() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOrigin("http://localhost:3000"); // Específica el origen de tu frontend
-        config.addAllowedMethod("*");
-        config.addAllowedHeader("*");
-        config.setAllowCredentials(true);
-        source.registerCorsConfiguration("/**", config);
-        return source;
-    }
+    // @Bean
+    // public UrlBasedCorsConfigurationSource corsConfigurationSource() {
+    //     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    //     CorsConfiguration config = new CorsConfiguration();
+    //     config.addAllowedOrigin("https://campo-digital-cesde.onrender.com"); // Específica el origen de tu frontend
+    //     config.addAllowedMethod("*");
+    //     config.addAllowedHeader("*");
+    //     config.setAllowCredentials(true);
+    //     source.registerCorsConfiguration("/**", config);
+    //     return source;
+    // }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

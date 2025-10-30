@@ -27,6 +27,7 @@ com\example\pib2\Categories\Repository\CategoryRepository.class
 com\example\pib2\Users\repository\TypeClienteRepository\TypeClienteRepository.class
 com\example\pib2\Users\model\dto\Departaments\DepartamentsDTO.class
 com\example\pib2\Users\model\dto\Address\AddressDTO$AddressDTOBuilder.class
+com\example\pib2\config\CorsConfig.class
 com\example\pib2\Users\controller\TypeClientsController\TypeClientsController.class
 com\example\pib2\Products\Model\dto\ProductDTO.class
 com\example\pib2\Sales\Model\dto\SaleDTO.class
